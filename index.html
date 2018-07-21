@@ -66,11 +66,17 @@ form button {
         var socket = io();
         //Trigger send button event
         $('form').submit(function(){
-        //Emit message to socket.io
-        socket.emit('chat message', $('#m').val());
-        //Reset the chat form
-        $('#m').val('');
-        return false;
+            //Emit message to socket.io
+            socket.emit('chat message', $('#m').val());
+            //Reset the chat form
+            $('#m').val('');
+            return false;
+        });
+
+        //Receive Messages
+        socket.on('chat message', function(msg){
+            //Append message to the message list
+            $('#messages').append($('<li>').text(msg));
         });
     });
     </script>

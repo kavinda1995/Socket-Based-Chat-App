@@ -24,6 +24,7 @@ io.on('connection', (socket) => {
     //Handle new Chat Message
     socket.on('chat message', (msg) => {
         console.log('new message : ' + msg);
+        io.emit('chat message', msg);
     });
 
     //Handle disconnect
