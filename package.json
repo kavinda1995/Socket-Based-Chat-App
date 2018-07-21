@@ -1,0 +1,21 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "A simple chat app using socket.io and node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "socket",
+    "programming",
+    "socket.io",
+    "node"
+  ],
+  "author": "Kavinda Jayakody",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
