@@ -78,14 +78,21 @@
             $('#messages').append($("<div class='message message-personal new'>" + messageText + "</div>"))
             //Reset the chat form
             $('#m').val('');
+            updateScroll();
             return false;
         });
+
+        function updateScroll(){
+            var element = document.getElementById("messages");
+            element.scrollTop = element.scrollHeight;
+        }
 
         //Receive Messages
         socket.on('chat message', function(msg){
             //Append message to the message list
             $('#messages').append($("<div class='message new'><span class='username'>" + msg.username + "</span></br><figure class='avatar'><img src='https://api.adorable.io/avatars/48/" + msg.username + ".png'/></figure>"
                 + msg.message + "</div>"));
+            updateScroll();    
         });
     });
     </script>
