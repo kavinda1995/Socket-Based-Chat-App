@@ -5,7 +5,7 @@ const path = require('path');
 
 //Init the express app
 const app = express();
-const port = process.env.PORT;
+const port = 3000;
 
 //Setup http server and bind it to socket.io
 const httpServer = http.createServer(app);
