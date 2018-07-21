@@ -26,7 +26,7 @@
                 <h1 id="userBox" ></h1>
                 <h2 style="color: #00c79c">Online</h2>
                 <figure class="avatar">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
+                <img id="userPic" src="" /></figure>
             </div>
             <div class="messages">
                 <div id="messages" class="messages-content" style="padding: 5px;"></div>
@@ -57,6 +57,10 @@
             chat.show();
             console.log(username.val());
             $("#userBox").text(username.val());
+
+            var image = "https://api.adorable.io/avatars/48/" + username.val() + ".png";
+            console.log(image);
+            $("#userPic").attr('src',image)
         })
 
         //Trigger send button event
@@ -78,7 +82,7 @@
         //Receive Messages
         socket.on('chat message', function(msg){
             //Append message to the message list
-            $('#messages').append($("<div class='message new'><span class='username'>" + msg.username + "</span></br><figure class='avatar'><img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg'/></figure>"
+            $('#messages').append($("<div class='message new'><span class='username'>" + msg.username + "</span></br><figure class='avatar'><img src='https://api.adorable.io/avatars/48/" + msg.username + ".png'/></figure>"
                 + msg.message + "</div>"));
         });
     });
