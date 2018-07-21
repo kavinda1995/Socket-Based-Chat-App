@@ -2,64 +2,43 @@
 <html>
   <head>
     <title>Chat app using socket.io</title>
-    <!-- <style href="./styles.css" /> -->
-    <style>
-      * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font: 13px Helvetica, Arial;
-}
-
-form {
-    background: #000;
-    padding: 3px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-form input {
-    border: 0;
-    padding: 10px;
-    width: 90%;
-    margin-right: .5%;
-}
-
-form button {
-    width: 9%;
-    background: #272727;
-    border: none;
-    color: white;
-    padding: 10px;
-}
-
-#messages {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-#messages li {
-    padding: 5px 10px;
-}
-
-#messages li:nth-child(odd) {
-    background: #eee;
-}
-    </style>
+    <link rel="stylesheet" href="/styles.css"></link>
   </head>
   <body>
-    <div style="width: 100%; background-color: #272727; color: white; height: 40px; text-align: center;">
-        <h1 style="padding-top: 5px;">Chat Box</h2>
+    <div>
+        <div id="name-box" class="chat" style="height: 20vh;">
+            <div class="chat-title">
+                <h1>Chat Box</h1>
+                <h2>Welcome to Chat Box</h2>
+                <figure class="avatar">
+                <img src="/images/chat.png" /></figure>
+            </div>
+            <div class="messages-content" style="color: white; text-align: center; font-family: open-sans">
+                <h1>Enter Username</h1>
+            </div>
+            <div class="message-box">
+                <input type="text" id="username" class="message-input" placeholder="username">
+                <button id="usernameBtn" class="message-submit">Enter</button>
+            </div>
+        </div>
+        <div id="chat-box" class="chat" style="display: none">
+            <div class="chat-title">
+                <h1 id="userBox" ></h1>
+                <h2 style="color: #00c79c">Online</h2>
+                <figure class="avatar">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
+            </div>
+            <div class="messages">
+                <div id="messages" class="messages-content" style="padding: 5px;"></div>
+            </div>
+            <div class="message-box">
+                <textarea type="text" id="m" class="message-input" placeholder="Type message..."></textarea>
+                <button type="submit" id="sendMessageBtn" class="message-submit">Send</button>
+            </div>
+            
+        </div>
+        <div class="bg"></div>
     </div>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" autofocus /><button>Send</button>
-    </form>
     
 
     <!-- Injecting the socket.io script -->
@@ -67,11 +46,30 @@ form button {
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
     $(function () {
+        var nameBox = $("#name-box");
+        var chat = $('#chat-box').hide();
+        var username = $("#username");
+
         var socket = io();
+
+        $('#usernameBtn').click(function() {
+            nameBox.hide();
+            chat.show();
+            console.log(username.val());
+            $("#userBox").text(username.val());
+        })
+
         //Trigger send button event
-        $('form').submit(function(){
+        $('#sendMessageBtn').click(function(){
             //Emit message to socket.io
-            socket.emit('chat message', $('#m').val());
+            var messageText = $('#m').val();
+            var messageEnvelop = {
+                'username' : username.val(),
+                'message' : messageText
+            };
+            socket.emit('chat message', messageEnvelop);
+
+            $('#messages').append($("<div class='message message-personal new'>" + messageText + "</div>"))
             //Reset the chat form
             $('#m').val('');
             return false;
@@ -80,7 +78,8 @@ form button {
         //Receive Messages
         socket.on('chat message', function(msg){
             //Append message to the message list
-            $('#messages').append($('<li>').text(msg));
+            $('#messages').append($("<div class='message new'><span class='username'>" + msg.username + "</span></br><figure class='avatar'><img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg'/></figure>"
+                + msg.message + "</div>"));
         });
     });
     </script>
