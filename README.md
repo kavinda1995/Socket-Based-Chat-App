@@ -10,6 +10,7 @@ Technologies used :-
 - Heroku
 - HTTP Server
 - Adorable.io
+- JQuery
 
 ------------------
 
@@ -30,12 +31,8 @@ Deploy Guides :-
 1. Clone or Download the repo
 2. Run npm install (I added node_modules btw :P)
 3. Run node index.js
->If running on local Comment line 8 and uncomment line 9 of index.js (Set env port)
-
->If running on heroku or any other deployment server - no need to change the port
-4. Run node index.js
-5. Navigate to localhost:3000 (or deployed link)
-6. You are all set :smiley:
+4. Navigate to localhost:3000 (or deployed link)
+7. You are all set :smiley:
 
 ----------------------------
 ------------------------
